@@ -1,0 +1,335 @@
+.about-page {
+  padding: 3rem 0;
+}
+
+.intro-card {
+  background: rgba(26, 26, 26, 0.8) !important;
+  border: 1px solid rgba(62, 207, 142, 0.2) !important;
+  border-radius: 16px !important;
+  padding: 1.5rem;
+}
+
+.section-title {
+  font-size: 2rem;
+  font-weight: 800;
+  color: #ffffff;
+  margin-bottom: 1.5rem;
+}
+
+.intro-text {
+  font-size: 1.1rem;
+  line-height: 1.8;
+  color: #a0a0a0;
+  margin-bottom: 1rem;
+}
+
+.intro-text strong {
+  color: #3ecf8e;
+  font-weight: 600;
+}
+
+/* Features */
+.feature-card-about {
+  background: rgba(26, 26, 26, 0.8) !important;
+  border: 1px solid rgba(62, 207, 142, 0.2) !important;
+  border-radius: 16px !important;
+  height: 100%;
+  transition: all 0.3s ease;
+}
+
+.feature-card-about:hover {
+  transform: translateY(-10px);
+  border-color: #3ecf8e !important;
+  box-shadow: 0 20px 40px rgba(62, 207, 142, 0.2);
+}
+
+.feature-icon-wrapper-about {
+  width: 80px;
+  height: 80px;
+  border-radius: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto 1.5rem;
+  transition: all 0.3s ease;
+}
+
+.feature-icon-wrapper-about.primary {
+  background: rgba(62, 207, 142, 0.1);
+  border: 2px solid rgba(62, 207, 142, 0.3);
+}
+
+.feature-icon-wrapper-about.success {
+  background: rgba(62, 207, 142, 0.1);
+  border: 2px solid rgba(62, 207, 142, 0.3);
+}
+
+.feature-icon-wrapper-about.warning {
+  background: rgba(251, 191, 36, 0.1);
+  border: 2px solid rgba(251, 191, 36, 0.3);
+}
+
+.feature-icon-wrapper-about.info {
+  background: rgba(62, 207, 142, 0.1);
+  border: 2px solid rgba(62, 207, 142, 0.3);
+}
+
+.feature-card-about:hover .feature-icon-wrapper-about {
+  transform: scale(1.1) rotate(5deg);
+}
+
+.feature-icon-about {
+  font-size: 2.5rem;
+  color: #3ecf8e;
+}
+
+.feature-icon-wrapper-about.warning .feature-icon-about {
+  color: #fbbf24;
+}
+
+.feature-title-about {
+  font-size: 1.3rem;
+  font-weight: 700;
+  color: #ffffff;
+  margin-bottom: 1rem;
+}
+
+.feature-text-about {
+  color: #a0a0a0;
+  line-height: 1.6;
+  margin: 0;
+}
+
+/* How It Works */
+.how-it-works-card {
+  background: rgba(26, 26, 26, 0.8) !important;
+  border: 1px solid rgba(62, 207, 142, 0.2) !important;
+  border-radius: 16px !important;
+}
+
+.how-it-works-card .card-header {
+  background: rgba(62, 207, 142, 0.05) !important;
+  border-bottom: 1px solid rgba(62, 207, 142, 0.2) !important;
+  padding: 1.5rem !important;
+}
+
+.process-step {
+  text-align: center;
+  position: relative;
+  padding: 1.5rem;
+  background: rgba(62, 207, 142, 0.05);
+  border: 1px solid rgba(62, 207, 142, 0.2);
+  border-radius: 12px;
+  transition: all 0.3s ease;
+  height: 100%;
+}
+
+.process-step:hover {
+  background: rgba(62, 207, 142, 0.1);
+  border-color: #3ecf8e;
+  transform: translateY(-5px);
+}
+
+.step-number {
+  position: absolute;
+  top: -15px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 40px;
+  height: 40px;
+  background: linear-gradient(135deg, #3ecf8e, #35b879);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 800;
+  font-size: 1.2rem;
+  color: #000;
+  box-shadow: 0 5px 15px rgba(62, 207, 142, 0.4);
+}
+
+.step-icon-wrapper {
+  width: 60px;
+  height: 60px;
+  background: rgba(62, 207, 142, 0.1);
+  border: 2px solid rgba(62, 207, 142, 0.3);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 1.5rem auto 1rem;
+}
+
+.step-icon {
+  font-size: 1.8rem;
+  color: #3ecf8e;
+}
+
+.step-title {
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: #ffffff;
+  margin-bottom: 0.75rem;
+}
+
+.step-description {
+  font-size: 0.95rem;
+  color: #a0a0a0;
+  line-height: 1.6;
+  margin: 0;
+}
+
+.methodology-section {
+  background: rgba(62, 207, 142, 0.05);
+  border: 1px solid rgba(62, 207, 142, 0.2);
+  border-radius: 12px;
+  padding: 2rem;
+}
+
+.methodology-title {
+  font-size: 1.3rem;
+  font-weight: 700;
+  color: #3ecf8e;
+  margin-bottom: 1rem;
+}
+
+.methodology-text {
+  font-size: 1rem;
+  color: #a0a0a0;
+  line-height: 1.8;
+  margin-bottom: 1rem;
+}
+
+.methodology-text:last-child {
+  margin-bottom: 0;
+}
+
+.methodology-text strong {
+  color: #3ecf8e;
+  font-weight: 600;
+}
+
+/* Technology Stack */
+.tech-stack-card {
+  background: rgba(26, 26, 26, 0.8) !important;
+  border: 1px solid rgba(62, 207, 142, 0.2) !important;
+  border-radius: 16px !important;
+}
+
+.tech-stack-card .card-header {
+  background: rgba(62, 207, 142, 0.05) !important;
+  border-bottom: 1px solid rgba(62, 207, 142, 0.2) !important;
+  padding: 1.5rem !important;
+}
+
+.header-icon-large {
+  font-size: 2.5rem;
+  color: #3ecf8e;
+}
+
+.tech-category {
+  background: rgba(62, 207, 142, 0.05);
+  border: 1px solid rgba(62, 207, 142, 0.2);
+  border-radius: 12px;
+  padding: 1.5rem;
+  height: 100%;
+}
+
+.tech-category-title {
+  font-size: 1.2rem;
+  font-weight: 700;
+  color: #3ecf8e;
+  margin-bottom: 1.5rem;
+  display: flex;
+  align-items: center;
+}
+
+.tech-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.tech-item {
+  padding: 1rem;
+  background: rgba(255, 255, 255, 0.02);
+  border-left: 3px solid #3ecf8e;
+  border-radius: 8px;
+  margin-bottom: 1rem;
+  transition: all 0.3s ease;
+}
+
+.tech-item:hover {
+  background: rgba(62, 207, 142, 0.1);
+  transform: translateX(5px);
+}
+
+.tech-name {
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: #ffffff;
+  margin-bottom: 0.25rem;
+}
+
+.tech-description {
+  font-size: 0.9rem;
+  color: #a0a0a0;
+}
+
+/* Disclaimer */
+.disclaimer-alert {
+  background: rgba(251, 191, 36, 0.1) !important;
+  border: 2px solid rgba(251, 191, 36, 0.3) !important;
+  border-radius: 16px !important;
+  padding: 2rem !important;
+}
+
+.disclaimer-alert .alert-heading {
+  color: #fbbf24;
+  font-size: 1.5rem;
+  font-weight: 700;
+}
+
+.disclaimer-alert hr {
+  border-color: rgba(251, 191, 36, 0.3);
+  margin: 1.5rem 0;
+}
+
+.disclaimer-alert p {
+  color: #ffffff;
+  font-size: 1.1rem;
+  margin-bottom: 1rem;
+}
+
+.disclaimer-list {
+  color: #a0a0a0;
+  line-height: 1.8;
+  padding-left: 1.5rem;
+  margin-bottom: 0;
+}
+
+.disclaimer-list li {
+  margin-bottom: 0.5rem;
+}
+
+/* Responsive */
+@media (max-width: 991px) {
+  .page-title {
+    font-size: 2.5rem;
+  }
+  
+  .section-title {
+    font-size: 1.75rem;
+  }
+}
+
+@media (max-width: 576px) {
+  .page-title {
+    font-size: 2rem;
+  }
+  
+  .intro-text,
+  .methodology-text {
+    font-size: 1rem;
+  }
+}
