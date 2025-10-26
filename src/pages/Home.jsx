@@ -1,238 +1,316 @@
-import { Container, Row, Col, Card, Button, Badge } from 'react-bootstrap';
+import { Container, Row, Col, Card, Button, Badge, Form } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
-import { FaFutbol, FaChartLine, FaTrophy, FaArrowRight, FaBolt, FaShieldAlt, FaRocket } from 'react-icons/fa';
-import { useState } from 'react';
+import { FaFutbol, FaChartLine, FaTrophy, FaArrowRight, FaBolt, FaShieldAlt, FaRocket, FaClock, FaFire } from 'react-icons/fa';
+import { useState, useEffect } from 'react';
+import { getRealUpcomingMatches, addPredictions } from '../services/realMatchesService';
 import './Home.css';
 
 function Home() {
-  const [featuredMatches] = useState([
-    {
-      id: 1,
-      homeTeam: 'Manchester United',
-      awayTeam: 'Liverpool',
-      competition: 'Premier League',
-      time: '15:00',
-      date: 'Today',
-      prediction: 'Draw',
-      confidence: 65,
-      isLive: true
-    },
-    {
-      id: 2,
-      homeTeam: 'Barcelona',
-      awayTeam: 'Real Madrid',
-      competition: 'La Liga',
-      time: '20:00',
-      date: 'Today',
-      prediction: 'Home Win',
-      confidence: 72,
-      isLive: false
-    },
-    {
-      id: 3,
-      homeTeam: 'Bayern Munich',
-      awayTeam: 'Borussia Dortmund',
-      competition: 'Bundesliga',
-      time: '17:30',
-      date: 'Tomorrow',
-      prediction: 'Home Win',
-      confidence: 68,
-      isLive: false
+  const [matches, setMatches] = useState([]);
+  const [filteredMatches, setFilteredMatches] = useState([]);
+  const [filter, setFilter] = useState('all');
+  const [leagueFilter, setLeagueFilter] = useState('all');
+
+  useEffect(() => {
+    loadMatches();
+  }, []);
+
+  useEffect(() => {
+    applyFilters();
+  }, [matches, filter, leagueFilter]);
+
+  const loadMatches = () => {
+    const { matches: realMatches } = getRealUpcomingMatches();
+    const matchesWithPredictions = addPredictions(realMatches);
+    setMatches(matchesWithPredictions);
+  };
+
+  const applyFilters = () => {
+    let filtered = [...matches];
+    
+    if (filter === 'live') {
+      filtered = filtered.filter(m => m.isLive);
+    } else if (filter === 'today') {
+      const today = new Date().toDateString();
+      filtered = filtered.filter(m => new Date(m.timestamp).toDateString() === today);
+    } else if (filter === 'upcoming') {
+      const now = Date.now();
+      filtered = filtered.filter(m => m.timestamp > now && !m.isLive);
     }
-  ]);
+    
+    if (leagueFilter !== 'all') {
+      filtered = filtered.filter(m => m.league.toLowerCase().includes(leagueFilter.toLowerCase()));
+    }
+    
+    setFilteredMatches(filtered);
+  };
+
+  const getConfidenceColor = (confidence) => {
+    if (confidence >= 75) return 'success';
+    if (confidence >= 65) return 'warning';
+    return 'danger';
+  };
+
+  const leagues = ['all', 'Premier League', 'La Liga', 'Bundesliga', 'Serie A', 'Ligue 1'];
 
   return (
     <div className="home-page">
       {/* Hero Section */}
-      <div className="hero-section">
+      <section className="hero-section-new">
         <Container>
           <Row className="align-items-center">
-            <Col lg={6} className="hero-content">
-              <div className="hero-badge">
-                <FaBolt className="me-2" />
-                AI-Powered Predictions
-              </div>
-              <h1 className="hero-title">
-                Build Winning Strategies
-                <span className="gradient-text"> in Minutes</span>
+            <Col lg={6} className="mb-5 mb-lg-0">
+              <Badge className="hero-badge-new">
+                <FaBolt /> Powered by AI
+              </Badge>
+              <h1 className="hero-title-new">
+                Predict Football Matches with
+                <span className="hero-gradient"> Advanced AI</span>
               </h1>
-              <p className="hero-subtitle">
-                Get instant, data-driven football predictions powered by advanced algorithms.
-                Analyze matches, track accuracy, and make informed decisions.
+              <p className="hero-text-new">
+                Get instant predictions for thousands of matches across all major leagues. 
+                Our AI analyzes team form, statistics, and historical data to give you the edge.
               </p>
-              <div className="hero-cta">
+              <div className="hero-buttons">
                 <Link to="/predictions">
-                  <Button className="btn-hero-primary">
+                  <Button className="btn-hero-main">
                     Start Predicting <FaArrowRight className="ms-2" />
                   </Button>
                 </Link>
                 <Link to="/about">
-                  <Button className="btn-hero-secondary">
-                    Learn More
+                  <Button className="btn-hero-outline">
+                    How It Works
                   </Button>
                 </Link>
               </div>
-              <div className="hero-stats">
-                <div className="stat-item">
-                  <div className="stat-number">1,234+</div>
-                  <div className="stat-label">Predictions</div>
+              
+              <div className="hero-stats-new">
+                <div className="stat-box-new">
+                  <div className="stat-icon-new"><FaTrophy /></div>
+                  <div>
+                    <div className="stat-num-new">68%</div>
+                    <div className="stat-text-new">Accuracy</div>
+                  </div>
                 </div>
-                <div className="stat-divider"></div>
-                <div className="stat-item">
-                  <div className="stat-number">68%</div>
-                  <div className="stat-label">Accuracy</div>
+                <div className="stat-box-new">
+                  <div className="stat-icon-new"><FaFutbol /></div>
+                  <div>
+                    <div className="stat-num-new">{matches.length}</div>
+                    <div className="stat-text-new">Matches</div>
+                  </div>
                 </div>
-                <div className="stat-divider"></div>
-                <div className="stat-item">
-                  <div className="stat-number">15+</div>
-                  <div className="stat-label">Leagues</div>
+                <div className="stat-box-new">
+                  <div className="stat-icon-new"><FaShieldAlt /></div>
+                  <div>
+                    <div className="stat-num-new">15+</div>
+                    <div className="stat-text-new">Leagues</div>
+                  </div>
                 </div>
               </div>
             </Col>
-            <Col lg={6} className="hero-visual">
-              <div className="floating-card">
-                <FaChartLine className="hero-icon" />
+            
+            <Col lg={6}>
+              <div className="hero-visual-new">
+                <div className="floating-orb orb-1"></div>
+                <div className="floating-orb orb-2"></div>
+                <div className="hero-card-main">
+                  <FaChartLine className="hero-main-icon" />
+                  <div className="pulse-ring"></div>
+                </div>
               </div>
             </Col>
           </Row>
         </Container>
-      </div>
+      </section>
 
-      <Container>
-        {/* Features Section */}
-        <div className="features-section">
+      {/* Features Banner */}
+      <section className="features-banner">
+        <Container>
           <Row>
-            <Col md={4} className="mb-4">
-              <Card className="feature-card">
-                <Card.Body className="text-center">
-                  <div className="feature-icon-wrapper">
-                    <FaBolt className="feature-icon" />
-                  </div>
-                  <h4 className="feature-title">Instant Analysis</h4>
-                  <p className="feature-text">
-                    Get predictions in real-time with our lightning-fast algorithm engine.
-                  </p>
-                </Card.Body>
-              </Card>
+            <Col md={4} className="mb-4 mb-md-0">
+              <div className="feature-item-new">
+                <FaBolt className="feature-icon-new" />
+                <h4>Instant Results</h4>
+                <p>Get predictions in seconds</p>
+              </div>
             </Col>
-            <Col md={4} className="mb-4">
-              <Card className="feature-card">
-                <Card.Body className="text-center">
-                  <div className="feature-icon-wrapper">
-                    <FaShieldAlt className="feature-icon" />
-                  </div>
-                  <h4 className="feature-title">Data-Driven</h4>
-                  <p className="feature-text">
-                    Built on historical data and statistical models for maximum accuracy.
-                  </p>
-                </Card.Body>
-              </Card>
+            <Col md={4} className="mb-4 mb-md-0">
+              <div className="feature-item-new">
+                <FaShieldAlt className="feature-icon-new" />
+                <h4>70%+ Accuracy</h4>
+                <p>Proven track record</p>
+              </div>
             </Col>
-            <Col md={4} className="mb-4">
-              <Card className="feature-card">
-                <Card.Body className="text-center">
-                  <div className="feature-icon-wrapper">
-                    <FaRocket className="feature-icon" />
-                  </div>
-                  <h4 className="feature-title">100% Free</h4>
-                  <p className="feature-text">
-                    No hidden costs, no premium features. Just pure predictions.
-                  </p>
-                </Card.Body>
-              </Card>
+            <Col md={4}>
+              <div className="feature-item-new">
+                <FaRocket className="feature-icon-new" />
+                <h4>100% Free</h4>
+                <p>No hidden fees ever</p>
+              </div>
             </Col>
           </Row>
-        </div>
+        </Container>
+      </section>
 
-        {/* Featured Matches */}
-        <div className="matches-section">
-          <div className="section-header">
-            <h2 className="section-title">
-              <FaFutbol className="me-3" />
-              Featured Matches
-            </h2>
-            <Link to="/predictions" className="view-all-link">
+      {/* Matches Section */}
+      <section className="matches-section-new">
+        <Container>
+          <div className="section-header-new">
+            <div>
+              <h2 className="section-title-new">
+                <FaFire className="me-3" style={{color: '#ef4444'}} />
+                Upcoming Matches
+              </h2>
+              <p className="section-subtitle-new">
+                Top fixtures from Europe's elite leagues
+              </p>
+            </div>
+            <Link to="/predictions" className="view-all-btn">
               View All <FaArrowRight className="ms-2" />
             </Link>
           </div>
-          
+
+          {/* Filters */}
+          <Card className="filters-card-new mb-4">
+            <Card.Body>
+              <Row className="align-items-center">
+                <Col md={6} className="mb-3 mb-md-0">
+                  <div className="filter-buttons">
+                    <Button 
+                      className={`filter-btn ${filter === 'all' ? 'active' : ''}`}
+                      onClick={() => setFilter('all')}
+                    >
+                      All
+                    </Button>
+                    <Button 
+                      className={`filter-btn ${filter === 'live' ? 'active' : ''}`}
+                      onClick={() => setFilter('live')}
+                    >
+                      <span className="live-indicator"></span>
+                      Live
+                    </Button>
+                    <Button 
+                      className={`filter-btn ${filter === 'today' ? 'active' : ''}`}
+                      onClick={() => setFilter('today')}
+                    >
+                      Today
+                    </Button>
+                    <Button 
+                      className={`filter-btn ${filter === 'upcoming' ? 'active' : ''}`}
+                      onClick={() => setFilter('upcoming')}
+                    >
+                      Upcoming
+                    </Button>
+                  </div>
+                </Col>
+                <Col md={6}>
+                  <Form.Select 
+                    className="league-filter-select"
+                    value={leagueFilter}
+                    onChange={(e) => setLeagueFilter(e.target.value)}
+                  >
+                    <option value="all">All Leagues</option>
+                    {leagues.slice(1).map(league => (
+                      <option key={league} value={league}>{league}</option>
+                    ))}
+                  </Form.Select>
+                </Col>
+              </Row>
+            </Card.Body>
+          </Card>
+
           <Row>
-            {featuredMatches.map((match) => (
+            {filteredMatches.map((match) => (
               <Col lg={4} md={6} key={match.id} className="mb-4">
-                <Card className="match-card-modern">
-                  <Card.Body>
-                    <div className="match-header">
-                      <Badge bg="dark" className="competition-badge">
-                        {match.competition}
+                <Card className="match-card-new">
+                  <div className="match-card-header">
+                    <Badge className="league-badge-new">
+                      {match.league}
+                    </Badge>
+                    {match.isLive && (
+                      <Badge bg="danger" className="live-badge-new">
+                        <span className="live-pulse"></span>
+                        LIVE
                       </Badge>
-                      {match.isLive && (
-                        <Badge bg="danger" className="live-badge">
-                          <span className="pulse-dot"></span>
-                          LIVE
-                        </Badge>
-                      )}
+                    )}
+                  </div>
+
+                  <div className="match-teams-new">
+                    <div className="team-new">
+                      <img 
+                        src={match.homeTeamLogo} 
+                        alt={match.homeTeam}
+                        className="team-logo-img-new"
+                      />
+                      <span className="team-name-new">{match.homeTeam}</span>
                     </div>
                     
-                    <div className="match-teams">
-                      <div className="team">
-                        <div className="team-logo">{match.homeTeam.charAt(0)}</div>
-                        <span className="team-name">{match.homeTeam}</span>
-                      </div>
-                      <div className="vs-divider">VS</div>
-                      <div className="team">
-                        <div className="team-logo">{match.awayTeam.charAt(0)}</div>
-                        <span className="team-name">{match.awayTeam}</span>
-                      </div>
-                    </div>
+                    <div className="vs-badge-new">VS</div>
                     
-                    <div className="match-info">
-                      <FaFutbol className="me-2" />
-                      {match.date} • {match.time}
+                    <div className="team-new">
+                      <img 
+                        src={match.awayTeamLogo} 
+                        alt={match.awayTeam}
+                        className="team-logo-img-new"
+                      />
+                      <span className="team-name-new">{match.awayTeam}</span>
                     </div>
-                    
-                    <div className="prediction-box">
-                      <div className="prediction-label">AI Prediction</div>
-                      <div className="prediction-value">{match.prediction}</div>
-                      <div className="confidence-bar">
-                        <div 
-                          className="confidence-fill" 
-                          style={{width: `${match.confidence}%`}}
-                        ></div>
-                      </div>
-                      <div className="confidence-text">{match.confidence}% Confidence</div>
+                  </div>
+
+                  <div className="match-datetime-new">
+                    <FaClock className="me-2" />
+                    {match.date} at {match.time}
+                  </div>
+
+                  <div className="prediction-section-new">
+                    <div className="prediction-header-new">
+                      <span>AI Prediction</span>
+                      <Badge bg={getConfidenceColor(match.confidence)}>
+                        {match.confidence}%
+                      </Badge>
                     </div>
-                  </Card.Body>
-                  <Card.Footer className="match-footer">
-                    <Link to="/predictions">
-                      <Button className="btn-view-details">
-                        View Analysis <FaArrowRight className="ms-2" />
-                      </Button>
-                    </Link>
-                  </Card.Footer>
+                    <div className="prediction-result-new">
+                      {match.prediction}
+                    </div>
+                    <div className="confidence-bar-new">
+                      <div 
+                        className="confidence-fill-new" 
+                        style={{width: `${match.confidence}%`}}
+                      />
+                    </div>
+                  </div>
+
+                  <Link to="/predictions" className="match-link-new">
+                    <Button className="btn-analyze-new">
+                      Full Analysis <FaArrowRight className="ms-2" />
+                    </Button>
+                  </Link>
                 </Card>
               </Col>
             ))}
           </Row>
-        </div>
+        </Container>
+      </section>
 
-        {/* CTA Section */}
-        <div className="cta-section">
-          <Card className="cta-card">
-            <Card.Body className="text-center">
-              <FaTrophy className="cta-icon" />
-              <h2 className="cta-title">Ready to Start Winning?</h2>
-              <p className="cta-text">
-                Join thousands of users making smarter predictions with GameSense.
-              </p>
-              <Link to="/predictions">
-                <Button className="btn-cta">
-                  Make Your First Prediction <FaArrowRight className="ms-2" />
-                </Button>
-              </Link>
-            </Card.Body>
+      {/* CTA Section */}
+      <section className="cta-section-new">
+        <Container>
+          <Card className="cta-card-new">
+            <div className="cta-icon-new">
+              <FaTrophy />
+            </div>
+            <h2 className="cta-title-new">Ready to Make Winning Predictions?</h2>
+            <p className="cta-text-new">
+              Join thousands of users who trust GameSense for accurate football predictions
+            </p>
+            <Link to="/predictions">
+              <Button className="btn-cta-new">
+                Get Started Free <FaArrowRight className="ms-2" />
+              </Button>
+            </Link>
           </Card>
-        </div>
-      </Container>
+        </Container>
+      </section>
     </div>
   );
 }
