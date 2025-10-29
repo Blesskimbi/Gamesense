@@ -437,3 +437,171 @@
     font-size: 2rem;
   }
 }
+
+.result-icon-wrapper {
+  width: 100px;
+  height: 100px;
+  background: linear-gradient(135deg, rgba(62, 207, 142, 0.2), rgba(62, 207, 142, 0.1));
+  border: 3px solid #3ecf8e;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto 1.5rem;
+  animation: scaleIn 0.5s ease;
+}
+
+.result-icon {
+  font-size: 3rem;
+  color: #3ecf8e;
+}
+
+.prediction-winner {
+  font-size: 2.5rem;
+  font-weight: 900;
+  color: #3ecf8e;
+  margin-bottom: 1rem;
+}
+
+.confidence-badge-large {
+  font-size: 1.2rem;
+  padding: 0.75rem 1.5rem;
+  border-radius: 25px;
+}
+
+.probability-item-new {
+  margin-bottom: 1.5rem;
+}
+
+.probability-bar-new {
+  height: 12px;
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 10px;
+  overflow: hidden;
+}
+
+.probability-fill-new {
+  height: 100%;
+  border-radius: 10px;
+  transition: width 0.8s ease;
+}
+
+.home-fill {
+  background: linear-gradient(90deg, #3ecf8e, #2da876);
+}
+
+.draw-fill {
+  background: linear-gradient(90deg, #fbbf24, #f59e0b);
+}
+
+.away-fill {
+  background: linear-gradient(90deg, #ef4444, #dc2626);
+}
+
+.team-form-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0.75rem 0;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.team-form-row:last-child {
+  border-bottom: none;
+}
+
+.form-badges {
+  display: flex;
+  gap: 0.5rem;
+}
+
+.market-box {
+  background: rgba(62, 207, 142, 0.05);
+  border: 1px solid rgba(62, 207, 142, 0.2);
+  border-radius: 12px;
+  padding: 1rem;
+  text-align: center;
+  transition: all 0.3s ease;
+}
+
+.market-box:hover {
+  background: rgba(62, 207, 142, 0.1);
+  border-color: #3ecf8e;
+  transform: translateY(-3px);
+}
+
+.market-label {
+  font-size: 0.85rem;
+  color: #a0a0a0;
+  margin-bottom: 0.5rem;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.market-value {
+  font-size: 1.2rem;
+  font-weight: 800;
+  color: #3ecf8e;
+}
+
+.insights-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.insights-list li {
+  display: flex;
+  align-items: flex-start;
+  padding: 0.75rem 0;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+  color: #ffffff;
+}
+
+.insights-list li:last-child {
+  border-bottom: none;
+}
+
+.empty-prediction-card {
+  height: 100%;
+  min-height: 500px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.empty-icon {
+  font-size: 5rem;
+  color: #3ecf8e;
+  opacity: 0.3;
+}
+
+.info-box {
+  background: rgba(62, 207, 142, 0.05);
+  border: 1px solid rgba(62, 207, 142, 0.2);
+  border-radius: 12px;
+  padding: 1rem;
+}
+
+.info-box h6 {
+  color: #3ecf8e;
+  font-weight: 700;
+  margin-bottom: 0.75rem;
+}
+
+.info-box ul {
+  margin: 0;
+  padding-left: 1.2rem;
+  color: #a0a0a0;
+  font-size: 0.9rem;
+}
+
+.info-box li {
+  margin-bottom: 0.5rem;
+}
+
+.btn-predict-submit {
+  padding: 1rem !important;
+  font-size: 1.1rem !important;
+  font-weight: 700 !important;
+}
