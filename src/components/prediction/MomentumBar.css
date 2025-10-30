@@ -1,0 +1,76 @@
+.momentum-card {
+  background: rgba(26, 26, 26, 0.8) !important;
+  border: 1px solid rgba(62, 207, 142, 0.2) !important;
+  border-radius: 16px !important;
+}
+
+.momentum-label {
+  display: flex;
+  align-items: center;
+  color: #ffffff;
+}
+
+.momentum-bars {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.momentum-bar-wrapper {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.momentum-progress {
+  height: 25px !important;
+  border-radius: 15px !important;
+  background: rgba(255, 255, 255, 0.1) !important;
+}
+
+.momentum-progress .progress-bar {
+  background: linear-gradient(90deg, #3ecf8e, #2da876) !important;
+  border-radius: 15px !important;
+  animation: slideIn 1s ease;
+}
+
+.away-momentum {
+  flex-direction: row-reverse;
+}
+
+.away-momentum .progress-bar {
+  background: linear-gradient(90deg, #ef4444, #dc2626) !important;
+}
+
+.momentum-value-home,
+.momentum-value-away {
+  font-weight: 800;
+  font-size: 1.1rem;
+  min-width: 50px;
+}
+
+.momentum-value-home {
+  color: #3ecf8e;
+  text-align: right;
+}
+
+.momentum-value-away {
+  color: #ef4444;
+  text-align: left;
+}
+
+.momentum-vs {
+  font-weight: 800;
+  color: #3ecf8e;
+  font-size: 1.2rem;
+}
+
+@keyframes slideIn {
+  from {
+    width: 0;
+  }
+  to {
+    width: 100%;
+  }
+}

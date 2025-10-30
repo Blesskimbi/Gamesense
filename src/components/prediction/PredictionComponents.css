@@ -1,0 +1,172 @@
+/* Visualization Cards */
+.visualization-card,
+.model-comparison-card,
+.value-bets-card,
+.h2h-timeline-card {
+  background: rgba(26, 26, 26, 0.8) !important;
+  border: 1px solid rgba(62, 207, 142, 0.2) !important;
+  border-radius: 16px !important;
+  margin-bottom: 1.5rem;
+}
+
+.visualization-card .card-header,
+.model-comparison-card .card-header,
+.value-bets-card .card-header,
+.h2h-timeline-card .card-header {
+  background: rgba(62, 207, 142, 0.05) !important;
+  border-bottom: 1px solid rgba(62, 207, 142, 0.2) !important;
+  padding: 1rem !important;
+}
+
+/* Model Comparison */
+.comparison-table {
+  color: #ffffff;
+  margin: 0;
+}
+
+.comparison-table th {
+  color: #3ecf8e;
+  font-weight: 700;
+  font-size: 0.85rem;
+  text-transform: uppercase;
+  border: none !important;
+}
+
+.comparison-table td {
+  border-color: rgba(255, 255, 255, 0.05) !important;
+  padding: 1rem !important;
+  vertical-align: middle;
+}
+
+.probability-badge {
+  padding: 0.5rem 1rem !important;
+  font-size: 0.9rem !important;
+  font-weight: 700 !important;
+}
+
+.confidence-indicator {
+  font-weight: 800;
+  color: #3ecf8e;
+  font-size: 1.1rem;
+}
+
+.consensus-section {
+  background: rgba(62, 207, 142, 0.05);
+  border: 1px solid rgba(62, 207, 142, 0.2);
+  border-radius: 8px;
+  padding: 1rem;
+}
+
+/* Value Bets */
+.value-table {
+  color: #ffffff;
+}
+
+.value-table th {
+  color: #3ecf8e;
+  font-weight: 700;
+  font-size: 0.85rem;
+  border: none !important;
+}
+
+.value-table td {
+  border-color: rgba(255, 255, 255, 0.05) !important;
+  padding: 1rem !important;
+}
+
+.value-row {
+  border-left: 3px solid #3ecf8e;
+  background: rgba(62, 207, 142, 0.03);
+}
+
+.odds-badge {
+  font-size: 1.1rem !important;
+  padding: 0.5rem 1rem !important;
+  font-weight: 700 !important;
+}
+
+.value-badge {
+  font-size: 0.95rem !important;
+  padding: 0.5rem 0.8rem !important;
+  font-weight: 700 !important;
+}
+
+/* Head-to-Head Timeline */
+.h2h-summary {
+  padding-bottom: 1.5rem;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.h2h-stats-row {
+  display: flex;
+  justify-content: space-around;
+  text-align: center;
+}
+
+.h2h-stat-value {
+  font-size: 2.5rem;
+  font-weight: 800;
+  line-height: 1;
+  margin-bottom: 0.5rem;
+}
+
+.h2h-stat-label {
+  color: #a0a0a0;
+  font-size: 0.9rem;
+}
+
+.timeline {
+  position: relative;
+  padding-left: 30px;
+}
+
+.timeline::before {
+  content: '';
+  position: absolute;
+  left: 10px;
+  top: 0;
+  bottom: 0;
+  width: 2px;
+  background: linear-gradient(to bottom, #3ecf8e, rgba(62, 207, 142, 0.2));
+}
+
+.timeline-item {
+  position: relative;
+  margin-bottom: 1.5rem;
+}
+
+.timeline-marker {
+  position: absolute;
+  left: -24px;
+  top: 5px;
+  width: 12px;
+  height: 12px;
+  background: #3ecf8e;
+  border-radius: 50%;
+  box-shadow: 0 0 10px rgba(62, 207, 142, 0.5);
+}
+
+.timeline-content {
+  background: rgba(62, 207, 142, 0.05);
+  border: 1px solid rgba(62, 207, 142, 0.2);
+  border-radius: 8px;
+  padding: 1rem;
+}
+
+.timeline-score {
+  font-size: 1.3rem;
+  font-weight: 800;
+  color: #3ecf8e;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .h2h-stats-row {
+    flex-direction: column;
+    gap: 1rem;
+  }
+  
+  .momentum-bars {
+    flex-direction: column;
+  }
+}

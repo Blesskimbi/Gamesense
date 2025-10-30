@@ -72,7 +72,7 @@ function Footer() {
         
         <div className="footer-bottom">
           <p className="copyright">
-            &copy; 2025 GameSense. Built with React & Supabase.
+            &copy; 2025 GameSense. Designed BY Bleskim 10/26/25 10:00PM.
           </p>
           <p className="disclaimer-text">
             <strong>Disclaimer:</strong> Predictions are for informational purposes only. Always gamble responsibly.
