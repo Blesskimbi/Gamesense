@@ -1,7 +1,7 @@
 import { Container, Row, Col, Card, Form, Button, Alert, Spinner, Badge, Tabs, Tab } from 'react-bootstrap';
 import { useState, useEffect } from 'react';
 import { useLocation } from 'react-router-dom';
-import { FaFutbol, FaChartLine, FaBolt, FaCheckCircle, FaTrophy, FaRobot, FaHeartbeat, FaNewspaper } from 'react-icons/fa';
+import { FaFutbol, FaChartLine, FaBolt, FaCheckCircle, FaTrophy, FaFire, FaBrain, FaDollarSign } from 'react-icons/fa';
 import enhancedPredictionEngine from '../services/enhancedPredictionEngine';
 import FormChart from '../components/prediction/FormChart';
 import TeamRadarChart from '../components/prediction/RadarChart';
@@ -9,8 +9,8 @@ import MomentumBar from '../components/prediction/MomentumBar';
 import ModelComparison from '../components/prediction/ModelComparison';
 import ValueBets from '../components/prediction/ValueBets';
 import HeadToHeadTimeline from '../components/prediction/HeadToHeadTimeline';
-import '../components/prediction/PredictionComponents.css';
 import './Predictions.css';
+import '../components/prediction/PredictionComponents.css';
 
 function Predictions() {
   const location = useLocation();
@@ -38,9 +38,10 @@ function Predictions() {
 
     setLoading(true);
     setError(null);
+    setPrediction(null);
 
     try {
-      console.log('🚀 Starting enhanced prediction...');
+      console.log('🚀 Generating enhanced prediction...');
       const result = await enhancedPredictionEngine.generatePrediction(homeTeam, awayTeam);
       console.log('✅ Prediction complete:', result);
       setPrediction(result);
@@ -53,13 +54,6 @@ function Predictions() {
     }
   };
 
-  const handleReset = () => {
-    setPrediction(null);
-    setHomeTeam('');
-    setAwayTeam('');
-    setError(null);
-  };
-
   const getConfidenceColor = (confidence) => {
     if (confidence >= 75) return 'success';
     if (confidence >= 65) return 'warning';
@@ -67,25 +61,24 @@ function Predictions() {
   };
 
   return (
-    <Container fluid className="predictions-page-enhanced">
+    <Container>
       <div className="text-center mb-5">
-        <Badge className="hero-badge-pred">
-          <FaRobot className="me-2" />
+        <Badge className="header-badge-predict mb-3">
+          <FaBrain className="me-2" />
           Enhanced AI Engine
         </Badge>
-        <h1 className="display-5 fw-bold mt-3">
+        <h1 className="display-5 fw-bold">
           <FaChartLine className="me-3" />
-          Professional Match Predictor
+          Advanced Match Predictor
         </h1>
         <p className="text-muted">
-          Advanced analytics powered by xG, sentiment analysis, and multiple AI models
+          AI-powered predictions with xG, sentiment analysis, and value bet detection
         </p>
       </div>
 
       <Row>
-        {/* Left Sidebar - Input Form */}
-        <Col lg={3} className="mb-4">
-          <Card className="prediction-input-card sticky-sidebar">
+        <Col lg={4} className="mb-4">
+          <Card className="prediction-input-card sticky-top" style={{top: '100px'}}>
             <Card.Header className="bg-primary text-white">
               <h5 className="mb-0">
                 <FaFutbol className="me-2" />
@@ -125,211 +118,293 @@ function Predictions() {
                 <Button
                   variant="primary"
                   type="submit"
-                  className="w-100 btn-predict-submit mb-3"
+                  className="w-100 btn-predict-submit"
                   disabled={loading}
                 >
                   {loading ? (
                     <>
                       <Spinner animation="border" size="sm" className="me-2" />
-                      Analyzing...
+                      Analyzing Match...
                     </>
                   ) : (
                     <>
                       <FaBolt className="me-2" />
-                      Generate Prediction
+                      Generate AI Prediction
                     </>
                   )}
                 </Button>
-
-                {prediction && (
-                  <Button
-                    variant="outline-secondary"
-                    className="w-100"
-                    onClick={handleReset}
-                  >
-                    Reset Form
-                  </Button>
-                )}
               </Form>
 
               <div className="info-box mt-4">
-                <h6>🎯 Advanced Features:</h6>
-                <ul className="feature-list">
-                  <li><FaChartLine className="me-2" />Expected Goals (xG)</li>
-                  <li><FaHeartbeat className="me-2" />Injury Impact</li>
-                  <li><FaNewspaper className="me-2" />Team Sentiment</li>
-                  <li><FaTrophy className="me-2" />Head-to-Head</li>
-                  <li><FaRobot className="me-2" />Multi-Model AI</li>
+                <h6>
+                  <FaFire className="text-warning me-2" />
+                  What We Analyze:
+                </h6>
+                <ul className="mb-0">
+                  <li>Expected Goals (xG) & xA</li>
+                  <li>Last 10 matches (weighted)</li>
+                  <li>Head-to-head history</li>
+                  <li>Injuries & suspensions</li>
+                  <li>Team sentiment & morale</li>
+                  <li>Corners, cards & possession</li>
+                  <li>Value bet opportunities</li>
+                  <li>Multiple AI model comparison</li>
                 </ul>
               </div>
             </Card.Body>
           </Card>
         </Col>
 
-        {/* Main Content Area */}
-        <Col lg={9} className="mb-4">
-          {loading ? (
-            <Card className="loading-card">
-              <Card.Body className="text-center py-5">
-                <Spinner animation="border" variant="primary" style={{width: '4rem', height: '4rem'}} />
-                <h4 className="mt-4">Analyzing Match...</h4>
-                <p className="text-muted">Processing 50+ data points across multiple models</p>
-                <div className="loading-steps mt-4">
-                  <div className="loading-step">✓ Fetching team statistics</div>
-                  <div className="loading-step">✓ Analyzing recent form</div>
-                  <div className="loading-step">⏳ Calculating xG & xA</div>
-                  <div className="loading-step">⏳ Running AI models</div>
-                </div>
-              </Card.Body>
-            </Card>
-          ) : prediction ? (
-            <div className="prediction-results-enhanced">
-              {/* Main Result Card */}
-              <Card className="main-result-card mb-4">
-                <Card.Body>
-                  <Row>
-                    <Col md={8}>
-                      <div className="result-header">
-                        <div className="result-icon-wrapper-enhanced">
-                          <FaTrophy className="result-icon-enhanced" />
-                        </div>
-                        <div>
-                          <h2 className="prediction-winner-enhanced">{prediction.winner}</h2>
-                          <Badge bg={getConfidenceColor(prediction.confidence)} className="confidence-badge-xl">
-                            {prediction.confidence}% Confidence
-                          </Badge>
-                        </div>
-                      </div>
-                      <p className="match-title-enhanced mt-3">
-                        {prediction.homeTeam} vs {prediction.awayTeam}
-                      </p>
-                    </Col>
-                    <Col md={4} className="text-center">
-                      <div className="xg-display">
-                        <h6 className="text-muted mb-3">Expected Goals (xG)</h6>
-                        <div className="xg-values">
-                          <div className="xg-value home">
-                            <div className="xg-number">{prediction.expectedGoals.home}</div>
-                            <div className="xg-label">{prediction.homeTeam}</div>
-                          </div>
-                          <div className="xg-vs">vs</div>
-                          <div className="xg-value away">
-                            <div className="xg-number">{prediction.expectedGoals.away}</div>
-                            <div className="xg-label">{prediction.awayTeam}</div>
-                          </div>
-                        </div>
-                      </div>
-                    </Col>
-                  </Row>
+        <Col lg={8} className="mb-4">
+          {prediction ? (
+            <div className="prediction-results-container">
+              {/* Main Prediction Card */}
+              <Card className="result-card mb-4">
+                <Card.Body className="text-center">
+                  <div className="result-icon-wrapper">
+                    <FaTrophy className="result-icon" />
+                  </div>
+                  <h2 className="prediction-winner">{prediction.winner}</h2>
+                  <Badge bg={getConfidenceColor(prediction.confidence)} className="confidence-badge-large">
+                    {prediction.confidence}% Confidence
+                  </Badge>
+                  <p className="mt-3 text-muted">
+                    {prediction.homeTeam} vs {prediction.awayTeam}
+                  </p>
+                  
+                  <div className="expected-goals mt-4">
+                    <Row>
+                      <Col xs={5} className="text-end">
+                        <div className="xg-value text-success">{prediction.expectedGoals.home}</div>
+                        <div className="xg-label">xG Home</div>
+                      </Col>
+                      <Col xs={2} className="d-flex align-items-center justify-content-center">
+                        <div className="xg-divider">vs</div>
+                      </Col>
+                      <Col xs={5} className="text-start">
+                        <div className="xg-value text-danger">{prediction.expectedGoals.away}</div>
+                        <div className="xg-label">xG Away</div>
+                      </Col>
+                    </Row>
+                  </div>
                 </Card.Body>
               </Card>
 
               {/* Tabbed Content */}
               <Tabs activeKey={activeTab} onSelect={(k) => setActiveTab(k)} className="prediction-tabs mb-4">
-                {/* Overview Tab */}
                 <Tab eventKey="overview" title="📊 Overview">
-                  <Row>
-                    <Col lg={12} className="mb-4">
-                      <Card className="probabilities-card">
-                        <Card.Header>
-                          <h6 className="mb-0">Win Probabilities</h6>
-                        </Card.Header>
-                        <Card.Body>
-                          <div className="probability-item-enhanced">
-                            <div className="d-flex justify-content-between mb-2">
-                              <span className="fw-bold">{prediction.homeTeam} Win</span>
-                              <span className="text-success fw-bold">{prediction.probabilities.homeWin}%</span>
-                            </div>
-                            <div className="probability-bar-enhanced">
-                              <div 
-                                className="probability-fill-enhanced home-fill" 
-                                style={{width: `${prediction.probabilities.homeWin}%`}}
-                              />
-                            </div>
-                          </div>
+                  {/* Win Probabilities */}
+                  <Card className="mb-4">
+                    <Card.Header>
+                      <h6 className="mb-0">Win Probabilities</h6>
+                    </Card.Header>
+                    <Card.Body>
+                      <div className="probability-item-new">
+                        <div className="d-flex justify-content-between mb-2">
+                          <span className="fw-bold">{prediction.homeTeam} Win</span>
+                          <span className="text-success fw-bold">{prediction.probabilities.homeWin}%</span>
+                        </div>
+                        <div className="probability-bar-new">
+                          <div 
+                            className="probability-fill-new home-fill" 
+                            style={{width: `${prediction.probabilities.homeWin}%`}}
+                          />
+                        </div>
+                      </div>
 
-                          <div className="probability-item-enhanced">
-                            <div className="d-flex justify-content-between mb-2">
-                              <span className="fw-bold">Draw</span>
-                              <span className="text-warning fw-bold">{prediction.probabilities.draw}%</span>
-                            </div>
-                            <div className="probability-bar-enhanced">
-                              <div 
-                                className="probability-fill-enhanced draw-fill" 
-                                style={{width: `${prediction.probabilities.draw}%`}}
-                              />
-                            </div>
-                          </div>
+                      <div className="probability-item-new">
+                        <div className="d-flex justify-content-between mb-2">
+                          <span className="fw-bold">Draw</span>
+                          <span className="text-warning fw-bold">{prediction.probabilities.draw}%</span>
+                        </div>
+                        <div className="probability-bar-new">
+                          <div 
+                            className="probability-fill-new draw-fill" 
+                            style={{width: `${prediction.probabilities.draw}%`}}
+                          />
+                        </div>
+                      </div>
 
-                          <div className="probability-item-enhanced">
-                            <div className="d-flex justify-content-between mb-2">
-                              <span className="fw-bold">{prediction.awayTeam} Win</span>
-                              <span className="text-danger fw-bold">{prediction.probabilities.awayWin}%</span>
-                            </div>
-                            <div className="probability-bar-enhanced">
-                              <div 
-                                className="probability-fill-enhanced away-fill" 
-                                style={{width: `${prediction.probabilities.awayWin}%`}}
-                              />
-                            </div>
-                          </div>
-                        </Card.Body>
-                      </Card>
-                    </Col>
+                      <div className="probability-item-new">
+                        <div className="d-flex justify-content-between mb-2">
+                          <span className="fw-bold">{prediction.awayTeam} Win</span>
+                          <span className="text-danger fw-bold">{prediction.probabilities.awayWin}%</span>
+                        </div>
+                        <div className="probability-bar-new">
+                          <div 
+                            className="probability-fill-new away-fill" 
+                            style={{width: `${prediction.probabilities.awayWin}%`}}
+                          />
+                        </div>
+                      </div>
+                    </Card.Body>
+                  </Card>
 
-                    <Col lg={12}>
-                      <MomentumBar 
-                        homeTeam={prediction.homeTeam}
-                        awayTeam={prediction.awayTeam}
-                        homeMomentum={prediction.stats.homeStats.momentum}
-                        awayMomentum={prediction.stats.awayStats.momentum}
-                      />
-                    </Col>
-                  </Row>
+                  {/* Momentum */}
+                  <MomentumBar 
+                    homeTeam={prediction.homeTeam}
+                    awayTeam={prediction.awayTeam}
+                    homeMomentum={prediction.stats.homeStats.momentum}
+                    awayMomentum={prediction.stats.awayStats.momentum}
+                  />
+
+                  {/* Advanced Markets */}
+                  <Card className="mb-4">
+                    <Card.Header>
+                      <h6 className="mb-0">📊 Advanced Markets</h6>
+                    </Card.Header>
+                    <Card.Body>
+                      <Row>
+                        <Col md={6} className="mb-3">
+                          <div className="market-box">
+                            <div className="market-label">Over/Under {prediction.markets.overUnder.line}</div>
+                            <div className="market-value">{prediction.markets.overUnder.recommendation}</div>
+                            <small className="text-muted">{prediction.markets.overUnder.over}% probability</small>
+                          </div>
+                        </Col>
+                        <Col md={6} className="mb-3">
+                          <div className="market-box">
+                            <div className="market-label">Both Teams Score</div>
+                            <div className="market-value">{prediction.markets.btts.recommendation}</div>
+                            <small className="text-muted">{prediction.markets.btts.yes}% probability</small>
+                          </div>
+                        </Col>
+                        <Col md={4} className="mb-3">
+                          <div className="market-box">
+                            <div className="market-label">Corners</div>
+                            <div className="market-value">O{prediction.markets.corners.line}</div>
+                            <small className="text-muted">Total: ~{prediction.markets.corners.total}</small>
+                          </div>
+                        </Col>
+                        <Col md={4} className="mb-3">
+                          <div className="market-box">
+                            <div className="market-label">Cards</div>
+                            <div className="market-value">O{prediction.markets.cards.line}</div>
+                            <small className="text-muted">Total: ~{prediction.markets.cards.total}</small>
+                          </div>
+                        </Col>
+                        <Col md={4} className="mb-3">
+                          <div className="market-box">
+                            <div className="market-label">Top Score</div>
+                            <div className="market-value">{prediction.markets.correctScore[0].score}</div>
+                            <small className="text-muted">{prediction.markets.correctScore[0].probability}% chance</small>
+                          </div>
+                        </Col>
+                      </Row>
+                    </Card.Body>
+                  </Card>
                 </Tab>
 
-                {/* Analysis Tab */}
                 <Tab eventKey="analysis" title="🔍 Deep Analysis">
-                  <Row>
-                    <Col lg={6} className="mb-4">
-                      <FormChart 
-                        homeData={prediction.visualizations.formChart.home}
-                        awayData={prediction.visualizations.formChart.away}
-                        homeTeam={prediction.homeTeam}
-                        awayTeam={prediction.awayTeam}
-                      />
-                    </Col>
-                    <Col lg={6} className="mb-4">
-                      <TeamRadarChart 
-                        homeData={prediction.visualizations.radarChart.home}
-                        awayData={prediction.visualizations.radarChart.away}
-                        homeTeam={prediction.homeTeam}
-                        awayTeam={prediction.awayTeam}
-                      />
-                    </Col>
+                  {/* AI Reasoning */}
+                  <Card className="mb-4">
+                    <Card.Header>
+                      <h6 className="mb-0">
+                        <FaBrain className="text-success me-2" />
+                        AI Reasoning & Key Factors
+                      </h6>
+                    </Card.Header>
+                    <Card.Body>
+                      {prediction.reasoning.map((reason, index) => (
+                        <div key={index} className="reasoning-item">
+                          <div className="d-flex justify-content-between align-items-start mb-2">
+                            <div className="d-flex align-items-start">
+                              <FaCheckCircle className="text-success me-2 mt-1" />
+                              <div>
+                                <strong>{reason.factor}</strong>
+                                <p className="mb-0 text-muted mt-1">{reason.description}</p>
+                              </div>
+                            </div>
+                            <Badge bg={reason.impact === 'High' ? 'success' : reason.impact === 'Medium' ? 'warning' : 'secondary'}>
+                              {reason.impact}
+                            </Badge>
+                          </div>
+                        </div>
+                      ))}
+                    </Card.Body>
+                  </Card>
 
-                    <Col lg={12}>
-                      <Card className="reasoning-card">
+                  {/* Team Stats Comparison */}
+                  <Card className="mb-4">
+                    <Card.Header>
+                      <h6 className="mb-0">📈 Team Statistics</h6>
+                    </Card.Header>
+                    <Card.Body>
+                      <Row>
+                        <Col md={6}>
+                          <h6 className="text-success mb-3">{prediction.homeTeam}</h6>
+                          <ul className="team-stats-list">
+                            <li><strong>xG per game:</strong> {prediction.stats.homeStats.xG}</li>
+                            <li><strong>Possession:</strong> {prediction.stats.homeStats.possession}%</li>
+                            <li><strong>Pass Accuracy:</strong> {prediction.stats.homeStats.passAccuracy}%</li>
+                            <li><strong>Shots per game:</strong> {prediction.stats.homeStats.shotsPerGame}</li>
+                            <li><strong>Clean sheets:</strong> {prediction.stats.homeStats.cleanSheets}</li>
+                            <li><strong>Team Rating:</strong> {prediction.stats.homeStats.rating}/100</li>
+                          </ul>
+                        </Col>
+                        <Col md={6}>
+                          <h6 className="text-danger mb-3">{prediction.awayTeam}</h6>
+                          <ul className="team-stats-list">
+                            <li><strong>xG per game:</strong> {prediction.stats.awayStats.xG}</li>
+                            <li><strong>Possession:</strong> {prediction.stats.awayStats.possession}%</li>
+                            <li><strong>Pass Accuracy:</strong> {prediction.stats.awayStats.passAccuracy}%</li>
+                            <li><strong>Shots per game:</strong> {prediction.stats.awayStats.shotsPerGame}</li>
+                            <li><strong>Clean sheets:</strong> {prediction.stats.awayStats.cleanSheets}</li>
+                            <li><strong>Team Rating:</strong> {prediction.stats.awayStats.rating}/100</li>
+                          </ul>
+                        </Col>
+                      </Row>
+                    </Card.Body>
+                  </Card>
+
+                  {/* Injuries & Sentiment */}
+                  <Row>
+                    <Col md={6} className="mb-4">
+                      <Card>
                         <Card.Header>
-                          <h6 className="mb-0">🧠 AI Reasoning</h6>
+                          <h6 className="mb-0">🏥 Injuries & Suspensions</h6>
                         </Card.Header>
                         <Card.Body>
-                          <div className="reasoning-items">
-                            {prediction.reasoning.map((reason, index) => (
-                              <div key={index} className="reasoning-item-enhanced">
-                                <div className="reasoning-header">
-                                  <span className="reasoning-factor">{reason.factor}</span>
-                                  <Badge bg={
-                                    reason.impact === 'High' ? 'danger' : 
-                                    reason.impact === 'Medium' ? 'warning' : 
-                                    'info'
-                                  }>
-                                    {reason.impact} Impact
-                                  </Badge>
-                                </div>
-                                <p className="reasoning-description">{reason.description}</p>
-                              </div>
-                            ))}
+                          <div className="mb-3">
+                            <strong className="text-success">{prediction.homeTeam}:</strong>
+                            <Badge bg={prediction.injuries.home.impact === 'High' ? 'danger' : 'warning'} className="ms-2">
+                              {prediction.injuries.home.impact} Impact
+                            </Badge>
+                            <p className="text-muted mt-2">
+                              {prediction.injuries.home.keyPlayersOut} key player(s) unavailable
+                            </p>
+                          </div>
+                          <div>
+                            <strong className="text-danger">{prediction.awayTeam}:</strong>
+                            <Badge bg={prediction.injuries.away.impact === 'High' ? 'danger' : 'warning'} className="ms-2">
+                              {prediction.injuries.away.impact} Impact
+                            </Badge>
+                            <p className="text-muted mt-2">
+                              {prediction.injuries.away.keyPlayersOut} key player(s) unavailable
+                            </p>
+                          </div>
+                        </Card.Body>
+                      </Card>
+                    </Col>
+                    <Col md={6} className="mb-4">
+                      <Card>
+                        <Card.Header>
+                          <h6 className="mb-0">💭 Team Sentiment</h6>
+                        </Card.Header>
+                        <Card.Body>
+                          <div className="mb-3">
+                            <strong className="text-success">{prediction.homeTeam}:</strong>
+                            <div className="sentiment-bar mt-2">
+                              <div className="sentiment-fill" style={{width: `${prediction.sentiment.home.score}%`}}></div>
+                            </div>
+                            <small className="text-muted">{prediction.sentiment.home.score}/100 - {prediction.sentiment.home.trend}</small>
+                          </div>
+                          <div>
+                            <strong className="text-danger">{prediction.awayTeam}:</strong>
+                            <div className="sentiment-bar mt-2">
+                              <div className="sentiment-fill away" style={{width: `${prediction.sentiment.away.score}%`}}></div>
+                            </div>
+                            <small className="text-muted">{prediction.sentiment.away.score}/100 - {prediction.sentiment.away.trend}</small>
                           </div>
                         </Card.Body>
                       </Card>
@@ -337,70 +412,22 @@ function Predictions() {
                   </Row>
                 </Tab>
 
-                {/* Markets Tab */}
-                <Tab eventKey="markets" title="💰 Markets">
-                  <Row>
-                    <Col lg={12} className="mb-4">
-                      <Card className="markets-overview-card">
-                        <Card.Header>
-                          <h6 className="mb-0">📈 Betting Markets Overview</h6>
-                        </Card.Header>
-                        <Card.Body>
-                          <Row>
-                            <Col md={3} className="mb-3">
-                              <div className="market-box-enhanced">
-                                <div className="market-label">Over/Under {prediction.markets.overUnder.line}</div>
-                                <div className="market-value-large">{prediction.markets.overUnder.recommendation}</div>
-                                <div className="market-prob">{prediction.markets.overUnder.over}% probability</div>
-                              </div>
-                            </Col>
-                            <Col md={3} className="mb-3">
-                              <div className="market-box-enhanced">
-                                <div className="market-label">Both Teams Score</div>
-                                <div className="market-value-large">{prediction.markets.btts.recommendation}</div>
-                                <div className="market-prob">{prediction.markets.btts.yes}% probability</div>
-                              </div>
-                            </Col>
-                            <Col md={3} className="mb-3">
-                              <div className="market-box-enhanced">
-                                <div className="market-label">Corners</div>
-                                <div className="market-value-large">{prediction.markets.corners.over}% Over {prediction.markets.corners.line}</div>
-                                <div className="market-prob">Expected: {prediction.markets.corners.total}</div>
-                              </div>
-                            </Col>
-                            <Col md={3} className="mb-3">
-                              <div className="market-box-enhanced">
-                                <div className="market-label">Cards</div>
-                                <div className="market-value-large">{prediction.markets.cards.over}% Over {prediction.markets.cards.line}</div>
-                                <div className="market-prob">Expected: {prediction.markets.cards.total}</div>
-                              </div>
-                            </Col>
-                          </Row>
-                        </Card.Body>
-                      </Card>
-                    </Col>
-
-                    <Col lg={12}>
-                      <Card className="correct-score-card">
-                        <Card.Header>
-                          <h6 className="mb-0">🎯 Most Likely Scores</h6>
-                        </Card.Header>
-                        <Card.Body>
-                          <div className="score-grid">
-                            {prediction.markets.correctScore.map((score, index) => (
-                              <div key={index} className="score-item">
-                                <div className="score-value">{score.score}</div>
-                                <div className="score-probability">{score.probability}%</div>
-                              </div>
-                            ))}
-                          </div>
-                        </Card.Body>
-                      </Card>
-                    </Col>
-                  </Row>
+                <Tab eventKey="visualizations" title="📊 Visualizations">
+                  <FormChart 
+                    homeData={prediction.visualizations.formChart.home}
+                    awayData={prediction.visualizations.formChart.away}
+                    homeTeam={prediction.homeTeam}
+                    awayTeam={prediction.awayTeam}
+                  />
+                  
+                  <TeamRadarChart 
+                    homeData={prediction.visualizations.radarChart.home}
+                    awayData={prediction.visualizations.radarChart.away}
+                    homeTeam={prediction.homeTeam}
+                    awayTeam={prediction.awayTeam}
+                  />
                 </Tab>
 
-                {/* Head to Head Tab */}
                 <Tab eventKey="h2h" title="🏆 Head-to-Head">
                   <HeadToHeadTimeline 
                     h2hData={prediction.headToHead}
@@ -409,183 +436,58 @@ function Predictions() {
                   />
                 </Tab>
 
-                {/* Injuries & Sentiment Tab */}
-                <Tab eventKey="injuries" title="⚕️ Team News">
-                  <Row>
-                    <Col lg={6} className="mb-4">
-                      <Card className="injuries-card">
-                        <Card.Header>
-                          <h6 className="mb-0">🏥 {prediction.homeTeam} - Injuries & Suspensions</h6>
-                        </Card.Header>
-                        <Card.Body>
-                          <Alert variant={
-                            prediction.injuries.home.impact === 'High' ? 'danger' :
-                            prediction.injuries.home.impact === 'Medium' ? 'warning' : 'info'
-                          }>
-                            <strong>Impact: {prediction.injuries.home.impact}</strong>
-                            <br />
-                            {prediction.injuries.home.keyPlayersOut} key player(s) unavailable
-                          </Alert>
-                          
-                          {prediction.injuries.home.details.length > 0 ? (
-                            <div className="injury-list">
-                              {prediction.injuries.home.details.map((injury, index) => (
-                                <div key={index} className="injury-item">
-                                  <Badge bg="dark" className="me-2">{injury.position}</Badge>
-                                  <Badge bg={injury.importance === 'Key' ? 'danger' : 'secondary'}>
-                                    {injury.importance}
-                                  </Badge>
-                                  <span className="ms-2 text-muted">- {injury.status}</span>
-                                </div>
-                              ))}
-                            </div>
-                          ) : (
-                            <p className="text-success mb-0">✓ No significant injury concerns</p>
-                          )}
-                        </Card.Body>
-                      </Card>
-                    </Col>
-
-                    <Col lg={6} className="mb-4">
-                      <Card className="injuries-card">
-                        <Card.Header>
-                          <h6 className="mb-0">🏥 {prediction.awayTeam} - Injuries & Suspensions</h6>
-                        </Card.Header>
-                        <Card.Body>
-                          <Alert variant={
-                            prediction.injuries.away.impact === 'High' ? 'danger' :
-                            prediction.injuries.away.impact === 'Medium' ? 'warning' : 'info'
-                          }>
-                            <strong>Impact: {prediction.injuries.away.impact}</strong>
-                            <br />
-                            {prediction.injuries.away.keyPlayersOut} key player(s) unavailable
-                          </Alert>
-                          
-                          {prediction.injuries.away.details.length > 0 ? (
-                            <div className="injury-list">
-                              {prediction.injuries.away.details.map((injury, index) => (
-                                <div key={index} className="injury-item">
-                                  <Badge bg="dark" className="me-2">{injury.position}</Badge>
-                                  <Badge bg={injury.importance === 'Key' ? 'danger' : 'secondary'}>
-                                    {injury.importance}
-                                  </Badge>
-                                  <span className="ms-2 text-muted">- {injury.status}</span>
-                                </div>
-                              ))}
-                            </div>
-                          ) : (
-                            <p className="text-success mb-0">✓ No significant injury concerns</p>
-                          )}
-                        </Card.Body>
-                      </Card>
-                    </Col>
-
-                    <Col lg={6} className="mb-4">
-                      <Card className="sentiment-card">
-                        <Card.Header>
-                          <h6 className="mb-0">📰 {prediction.homeTeam} Sentiment</h6>
-                        </Card.Header>
-                        <Card.Body>
-                          <div className="sentiment-score">
-                            <div className="sentiment-number">{prediction.sentiment.home.score}</div>
-                            <div className="sentiment-label">Mood Score</div>
-                          </div>
-                          <Badge bg={
-                            prediction.sentiment.home.trend === 'Rising' ? 'success' :
-                            prediction.sentiment.home.trend === 'Falling' ? 'danger' : 'secondary'
-                          } className="mb-3">
-                            {prediction.sentiment.home.trend} Trend
-                          </Badge>
-                          <div className="sentiment-factors">
-                            <strong className="d-block mb-2">Key Factors:</strong>
-                            {prediction.sentiment.home.factors.map((factor, index) => (
-                              <div key={index} className="sentiment-factor">
-                                <FaCheckCircle className="text-success me-2" />
-                                {factor}
-                              </div>
-                            ))}
-                          </div>
-                        </Card.Body>
-                      </Card>
-                    </Col>
-
-                    <Col lg={6} className="mb-4">
-                      <Card className="sentiment-card">
-                        <Card.Header>
-                          <h6 className="mb-0">📰 {prediction.awayTeam} Sentiment</h6>
-                        </Card.Header>
-                        <Card.Body>
-                          <div className="sentiment-score">
-                            <div className="sentiment-number">{prediction.sentiment.away.score}</div>
-                            <div className="sentiment-label">Mood Score</div>
-                          </div>
-                          <Badge bg={
-                            prediction.sentiment.away.trend === 'Rising' ? 'success' :
-                            prediction.sentiment.away.trend === 'Falling' ? 'danger' : 'secondary'
-                          } className="mb-3">
-                            {prediction.sentiment.away.trend} Trend
-                          </Badge>
-                          <div className="sentiment-factors">
-                            <strong className="d-block mb-2">Key Factors:</strong>
-                            {prediction.sentiment.away.factors.map((factor, index) => (
-                              <div key={index} className="sentiment-factor">
-                                <FaCheckCircle className="text-success me-2" />
-                                {factor}
-                              </div>
-                            ))}
-                          </div>
-                        </Card.Body>
-                      </Card>
-                    </Col>
-                  </Row>
-                </Tab>
-
-                {/* AI Models Tab */}
-                <Tab eventKey="models" title="🤖 AI Models">
+                <Tab eventKey="models" title="🤖 AI Comparison">
                   <ModelComparison comparison={prediction.modelComparison} />
                 </Tab>
 
-                {/* Value Bets Tab */}
-                <Tab eventKey="value" title="💎 Value Bets">
+                <Tab eventKey="value" title="💰 Value Bets">
                   <ValueBets valueBets={prediction.valueBets} />
                 </Tab>
               </Tabs>
+
+              {/* Pro Tip */}
+              <Alert variant="success" className="pro-tip-alert">
+                <strong>💡 Pro Tip:</strong> Our AI recommends combining {prediction.winner} + 
+                {prediction.markets.overUnder.recommendation} + {prediction.markets.btts.recommendation} 
+                for this match. {prediction.valueBets && prediction.valueBets.length > 0 && 
+                `We've also detected ${prediction.valueBets.length} value bet opportunity!`}
+              </Alert>
             </div>
           ) : (
-            <Card className="empty-prediction-card-enhanced">
+            <Card className="empty-prediction-card">
               <Card.Body className="text-center py-5">
-                <FaChartLine className="empty-icon-enhanced" />
-                <h3 className="mt-4">Ready for Advanced Analysis</h3>
-                <p className="text-muted mb-4">
-                  Enter team names to generate comprehensive AI-powered predictions with:
+                <FaChartLine className="empty-icon" />
+                <h4 className="mt-4">Ready for Advanced Analysis</h4>
+                <p className="text-muted">
+                  Enter both team names and click "Generate AI Prediction" to see:
                 </p>
-                <Row className="justify-content-center">
-                  <Col md={8}>
-                    <div className="features-grid">
-                      <div className="feature-item-empty">
-                        <FaChartLine className="feature-icon-empty" />
-                        <span>Expected Goals (xG)</span>
-                      </div>
-                      <div className="feature-item-empty">
-                        <FaHeartbeat className="feature-icon-empty" />
-                        <span>Injury Analysis</span>
-                      </div>
-                      <div className="feature-item-empty">
-                        <FaNewspaper className="feature-icon-empty" />
-                        <span>Team Sentiment</span>
-                      </div>
-                      <div className="feature-item-empty">
-                        <FaTrophy className="feature-icon-empty" />
-                        <span>H2H History</span>
-                      </div>
-                      <div className="feature-item-empty">
-                        <FaRobot className="feature-icon-empty" />
-                        <span>Multi-Model AI</span>
-                      </div>
-                      <div className="feature-item-empty">
-                        <FaBolt className="feature-icon-empty" />
-                        <span>Value Bets</span>
-                      </div>
+                <Row className="mt-4">
+                  <Col md={6} className="mb-3">
+                    <div className="feature-preview">
+                      <FaBrain className="feature-icon text-success" />
+                      <h6>Deep Learning Analysis</h6>
+                      <p>xG, xA, possession & momentum</p>
+                    </div>
+                  </Col>
+                  <Col md={6} className="mb-3">
+                    <div className="feature-preview">
+                      <FaFire className="feature-icon text-warning" />
+                      <h6>Sentiment Analysis</h6>
+                      <p>Team mood & morale index</p>
+                    </div>
+                  </Col>
+                  <Col md={6} className="mb-3">
+                    <div className="feature-preview">
+                      <FaChartLine className="feature-icon text-primary" />
+                      <h6>Interactive Charts</h6>
+                      <p>Form trends & radar comparison</p>
+                    </div>
+                  </Col>
+                  <Col md={6} className="mb-3">
+                    <div className="feature-preview">
+                      <FaDollarSign className="feature-icon text-success" />
+                      <h6>Value Bet Detection</h6>
+                      <p>Find betting opportunities</p>
                     </div>
                   </Col>
                 </Row>

@@ -1,150 +1,16 @@
-/* Enhanced Predictions Page */
-.predictions-page-enhanced {
-  padding: 3rem 0;
-}
-
-.hero-badge-pred {
+/* Header Badge */
+.header-badge-predict {
   background: rgba(62, 207, 142, 0.15) !important;
   border: 1px solid rgba(62, 207, 142, 0.4) !important;
   color: #3ecf8e !important;
   padding: 0.6rem 1.2rem !important;
   border-radius: 30px !important;
   font-weight: 600 !important;
-  font-size: 0.9rem !important;
-}
-
-.sticky-sidebar {
-  position: sticky;
-  top: 100px;
-}
-
-.feature-list {
-  list-style: none;
-  padding: 0;
-  margin: 0;
-}
-
-.feature-list li {
-  display: flex;
+  display: inline-flex;
   align-items: center;
-  padding: 0.5rem 0;
-  color: #a0a0a0;
-  font-size: 0.9rem;
 }
 
-/* Loading Card */
-.loading-card {
-  background: rgba(26, 26, 26, 0.8) !important;
-  border: 1px solid rgba(62, 207, 142, 0.2) !important;
-  border-radius: 16px !important;
-}
-
-.loading-steps {
-  text-align: left;
-  max-width: 300px;
-  margin: 0 auto;
-}
-
-.loading-step {
-  padding: 0.5rem 0;
-  color: #a0a0a0;
-}
-
-/* Main Result Card */
-.main-result-card {
-  background: linear-gradient(135deg, rgba(62, 207, 142, 0.1), rgba(62, 207, 142, 0.05)) !important;
-  border: 2px solid rgba(62, 207, 142, 0.3) !important;
-  border-radius: 20px !important;
-}
-
-.result-header {
-  display: flex;
-  align-items: center;
-  gap: 2rem;
-}
-
-.result-icon-wrapper-enhanced {
-  width: 80px;
-  height: 80px;
-  background: linear-gradient(135deg, #3ecf8e, #2da876);
-  border-radius: 50%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  box-shadow: 0 10px 30px rgba(62, 207, 142, 0.4);
-}
-
-.result-icon-enhanced {
-  font-size: 2.5rem;
-  color: #000;
-}
-
-.prediction-winner-enhanced {
-  font-size: 2.5rem;
-  font-weight: 900;
-  color: #3ecf8e;
-  margin: 0;
-  line-height: 1;
-}
-
-.confidence-badge-xl {
-  font-size: 1.1rem !important;
-  padding: 0.6rem 1.2rem !important;
-  border-radius: 25px !important;
-  margin-top: 0.5rem;
-}
-
-.match-title-enhanced {
-  font-size: 1.3rem;
-  color: #ffffff;
-  margin: 0;
-}
-
-.xg-display {
-  background: rgba(26, 26, 26, 0.5);
-  border: 1px solid rgba(62, 207, 142, 0.2);
-  border-radius: 12px;
-  padding: 1.5rem;
-}
-
-.xg-values {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 1.5rem;
-}
-
-.xg-value {
-  text-align: center;
-}
-
-.xg-number {
-  font-size: 2.5rem;
-  font-weight: 900;
-  line-height: 1;
-  margin-bottom: 0.5rem;
-}
-
-.xg-value.home .xg-number {
-  color: #3ecf8e;
-}
-
-.xg-value.away .xg-number {
-  color: #ef4444;
-}
-
-.xg-label {
-  font-size: 0.85rem;
-  color: #a0a0a0;
-}
-
-.xg-vs {
-  font-size: 1.2rem;
-  font-weight: 800;
-  color: #a0a0a0;
-}
-
-/* Tabs */
+/* Prediction Tabs */
 .prediction-tabs .nav-tabs {
   border-bottom: 2px solid rgba(62, 207, 142, 0.2) !important;
 }
@@ -168,4 +34,118 @@
   border-bottom: 3px solid #3ecf8e !important;
 }
 
-/* Probabilities Car
+/* Expected Goals Display */
+.expected-goals {
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+  padding-top: 1.5rem;
+}
+
+.xg-value {
+  font-size: 2.5rem;
+  font-weight: 800;
+  line-height: 1;
+  margin-bottom: 0.5rem;
+}
+
+.xg-label {
+  color: #a0a0a0;
+  font-size: 0.9rem;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+.xg-divider {
+  font-size: 1.5rem;
+  font-weight: 800;
+  color: #3ecf8e;
+}
+
+/* Reasoning Items */
+.reasoning-item {
+  padding: 1rem;
+  background: rgba(62, 207, 142, 0.03);
+  border-left: 3px solid #3ecf8e;
+  border-radius: 8px;
+  margin-bottom: 1rem;
+}
+
+.reasoning-item:last-child {
+  margin-bottom: 0;
+}
+
+/* Team Stats List */
+.team-stats-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.team-stats-list li {
+  padding: 0.75rem 0;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+  color: #ffffff;
+}
+
+.team-stats-list li:last-child {
+  border-bottom: none;
+}
+
+/* Sentiment Bar */
+.sentiment-bar {
+  height: 12px;
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 10px;
+  overflow: hidden;
+}
+
+.sentiment-fill {
+  height: 100%;
+  background: linear-gradient(90deg, #3ecf8e, #2da876);
+  border-radius: 10px;
+  transition: width 0.8s ease;
+}
+
+.sentiment-fill.away {
+  background: linear-gradient(90deg, #ef4444, #dc2626);
+}
+
+/* Pro Tip Alert */
+.pro-tip-alert {
+  background: rgba(62, 207, 142, 0.1) !important;
+  border: 2px solid #3ecf8e !important;
+  color: #ffffff !important;
+  border-radius: 12px !important;
+  font-size: 1.05rem;
+}
+
+/* Feature Preview */
+.feature-preview {
+  text-align: center;
+  padding: 1.5rem;
+  background: rgba(62, 207, 142, 0.05);
+  border: 1px solid rgba(62, 207, 142, 0.2);
+  border-radius: 12px;
+  transition: all 0.3s ease;
+}
+
+.feature-preview:hover {
+  transform: translateY(-5px);
+  border-color: #3ecf8e;
+}
+
+.feature-icon {
+  font-size: 2.5rem;
+  margin-bottom: 1rem;
+}
+
+.feature-preview h6 {
+  color: #ffffff;
+  font-weight: 700;
+  margin-bottom: 0.5rem;
+}
+
+.feature-preview p {
+  color: #a0a0a0;
+  margin: 0;
+  font-size: 0.9rem;
+}
